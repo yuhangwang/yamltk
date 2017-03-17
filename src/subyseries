@@ -15,10 +15,10 @@ import itertools
 def range_replace(s: str, start: int, stop: int) -> list:
     """Replace [:I:] in string s by range(start, stop+1)"""
     def replace_I(line):
-        if re.match(r'.*\[\:I\:\].*', line):
+        if re.match(r'.*\[\:i\:\].*', line):
             return "\n".join(
                 map(
-                    lambda i: re.sub(r"\[\:I\:\]", str(i), line),
+                    lambda i: re.sub(r"\[\:i\:\]", str(i), line),
                     range(start, stop+1)
                 )
             )
@@ -27,8 +27,8 @@ def range_replace(s: str, start: int, stop: int) -> list:
 
     return ["\n".join(
         map(replace_I,
-            s.replace("[:START:]", str(start))
-              .replace("[:STOP:]", str(stop))
+            s.replace("[:start:]", str(start))
+              .replace("[:stop:]", str(stop))
               .split("\n")
             )
         )]

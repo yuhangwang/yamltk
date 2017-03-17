@@ -17,7 +17,7 @@ def range_replace(s: str, start: int, stop: int) -> List[str]:
     """Replace [:I:] in string s by range(start, stop+1)"""
     return list(
         map(
-            lambda i: re.sub(r"\[\:I\:\]", str(i), s),
+            lambda i: re.sub(r"\[\:i\:\]", str(i), s),
             range(start, stop+1)
         )
     )
