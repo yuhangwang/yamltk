@@ -5,7 +5,6 @@
 # Author: Yuhang(Steven) Wang
 # Date: 03/15/2017
 # License: MIT/X11
-
 from typing import List
 import re
 import sys
@@ -13,14 +12,26 @@ import yaml
 import json
 import itertools
 
-def range_replace(s: str, start: int, stop: int) -> List[str]:
+def range_replace(s: str, start: int, stop: int) -> list:
     """Replace [:I:] in string s by range(start, stop+1)"""
-    return list(
-        map(
-            lambda i: re.sub(r"\[\:I\:\]", str(i), s),
-            range(start, stop+1)
-        )
-    )
+    def replace_I(line):
+        if re.match(r'.*\[\:I\:\].*', line):
+            return "\n".join(
+                map(
+                    lambda i: re.sub(r"\[\:I\:\]", str(i), line),
+                    range(start, stop+1)
+                )
+            )
+        else:
+            return line
+
+    return ["\n".join(
+        map(replace_I,
+            s.replace("[:START:]", str(start))
+              .replace("[:STOP:]", str(stop))
+              .split("\n")
+            )
+        )]
 
 def  flatten_list(ls: List[list]) -> list:
     return list(itertools.chain(*ls))
